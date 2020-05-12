@@ -1,0 +1,11 @@
+youtube\ChannelSystemRepository.class
+youtube\ChannelSystemController.class
+youtube\DeletedChannel.class
+youtube\PolicyHandler.class
+youtube\config\kafka\KafkaProcessor.class
+youtube\CreatedChannel.class
+youtube\EditedChannel.class
+youtube\ChannelSystem.class
+youtube\AbstractEvent.class
+youtube\AbstractEvent$1.class
+youtube\Application.class
