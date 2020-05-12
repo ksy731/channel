@@ -13,26 +13,25 @@ public class PolicyHandler{
     private ChannelSystemRepository channelSystemRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void onEventByString(@Payload String event){
-        System.out.println("====== start event message ================");
-        System.out.println(event);
-        System.out.println("====== end event message ================");
-    }
-
-
-    @StreamListener(KafkaProcessor.INPUT)
     public void wheneverUploadedVideo_EditedChannel(@Payload UploadedVideo uploadedVideo){
-
         if(uploadedVideo.isMe()){
             System.out.println("##### listener EditedChannel : " + uploadedVideo.toJson());
             channelSystemRepository.findById(uploadedVideo.getChannelId()).ifPresent(
                     channelSystem -> {
-//                       channelSystem.addTotalView(uploadedVideo.addTotalView()); // 조회수 추가
-//                        channelSystem.setTotalView(uploadedVideo.getViewCount()); // 조회수 세팅
+                        //channelSystem.addTotalView(uploadedVideo.addTotalView()); // 조회수 추가
+                        channelSystem.addTotalView(uploadedVideo.getViewCount()); // 조회수 세팅
                         channelSystemRepository.save(channelSystem);
                     }
-            );
+                );
 
+            if(!channelSystemRepository.existsById(uploadedVideo.getChannelId())) {
+                ChannelSystem ch = new ChannelSystem();
+                ch.setChannelId(uploadedVideo.getChannelId());
+                ch.setClientId(uploadedVideo.getClientId());
+                ch.setTotalView(uploadedVideo.getViewCount());
+                channelSystemRepository.save(ch);
+                System.out.println("#####[NEW] listener EditedChannel : " + uploadedVideo.toJson());
+            }
             System.out.println("======================");
         }
     }

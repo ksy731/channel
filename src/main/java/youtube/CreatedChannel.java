@@ -3,9 +3,10 @@ package youtube;
 public class CreatedChannel extends AbstractEvent {
 
     private String channelName;
-    private String channelId;
-    private String clientId;
-    private String videoId;
+    private Long channelId;
+    private Long clientId;
+    private Long videoId;
+    private int totalView ; // 조회수
 
     public CreatedChannel(){
         super();
@@ -18,25 +19,36 @@ public class CreatedChannel extends AbstractEvent {
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
-    public String getChannelId() {
+
+    public Long getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(String channelId) {
+    public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
-    public String getClientId() {
+
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
-    public String getVideoId() {
+
+    public Long getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(String videoId) {
+    public void setVideoId(Long videoId) {
         this.videoId = videoId;
+    }
+
+    public int getTotalView() {
+        return totalView;
+    }
+
+    public void setTotalView(int totalView) {
+        this.totalView = totalView;
     }
 }
