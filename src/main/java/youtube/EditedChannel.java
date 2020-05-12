@@ -6,6 +6,7 @@ public class EditedChannel extends AbstractEvent {
     private String channelId;
     private String clientId;
     private String videoId;
+    private int totalView;
 
     public EditedChannel(){
         super();
@@ -39,4 +40,14 @@ public class EditedChannel extends AbstractEvent {
     public void setVideoId(String videoId) {
         this.videoId = videoId;
     }
+
+    public int getTotalView() {
+        return totalView;
+    }
+
+    public void setTotalView(int totalView) {
+        this.totalView = totalView;
+    }
+
+
 }

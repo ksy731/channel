@@ -1,6 +1,12 @@
 package youtube;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class DeletedChannel extends AbstractEvent {
+
+    @Autowired
+    private ChannelSystemRepository channelSystemRepository;
 
     private String channelName;
     private String channelId;

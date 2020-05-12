@@ -16,12 +16,14 @@ import org.springframework.util.MimeTypeUtils;
 @Table(name="ChannelSystem_table")
 public class ChannelSystem {
 
-    private String channelName;
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private String channelId;
-    private String clientId;
-    private String videoId;
+    private Long channelId;
+    private String channelName;
+    private Long clientId;
+    private Long videoId;
+    private int totalView = 0; // 조회수
 
     @PrePersist
     public void onPrePersist(){
@@ -29,42 +31,21 @@ public class ChannelSystem {
         BeanUtils.copyProperties(this, createdChannel);
         createdChannel.publishAfterCommit();
 
+    }
 
+    @PreUpdate
+    public void onPostEdited(){
         EditedChannel editedChannel = new EditedChannel();
         BeanUtils.copyProperties(this, editedChannel);
         editedChannel.publishAfterCommit();
+    }
 
 
+    @PreRemove
+    public void onPostRemove(){
         DeletedChannel deletedChannel = new DeletedChannel();
         BeanUtils.copyProperties(this, deletedChannel);
         deletedChannel.publishAfterCommit();
-
-
-    }
-
-    @PostPersist
-    public void eventPublish(){
-        CreatedChannel createdChannel = new CreatedChannel();
-        createdChannel.setChannelId(this.getClientId());
-        createdChannel.setChannelName(this.getChannelName());
-        createdChannel.setClientId(this.getClientId());
-        createdChannel.setVideoId(this.getVideoId());
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = null;
-
-        try {
-            json = objectMapper.writeValueAsString(createdChannel);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("JSON format exception", e);
-        }
-
-        Processor processor = Application.applicationContext.getBean(Processor.class);
-        MessageChannel outputChannel = processor.output();
-
-        outputChannel.send(MessageBuilder
-                .withPayload(json)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .build());
     }
 
 
@@ -75,29 +56,41 @@ public class ChannelSystem {
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
-    public String getChannelId() {
+
+    public Long getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(String channelId) {
+    public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
-    public String getClientId() {
+
+
+    public Long getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId) {
+    public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
-    public String getVideoId() {
+
+    public Long getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(String videoId) {
+    public void setVideoId(Long videoId) {
         this.videoId = videoId;
     }
 
+    public int getTotalView() {
+        return totalView;
+    }
 
+    public void setTotalView(int totalView) {
+        this.totalView = totalView;
+    }
 
-
+    public void addTotalView(int totalView) {
+        this.totalView += totalView;
+    }
 }
