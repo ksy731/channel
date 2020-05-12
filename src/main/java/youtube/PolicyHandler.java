@@ -6,7 +6,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import youtube.config.kafka.KafkaProcessor;
 
-
 @Service
 public class PolicyHandler{
 
@@ -26,11 +25,14 @@ public class PolicyHandler{
 
         if(uploadedVideo.isMe()){
             System.out.println("##### listener EditedChannel : " + uploadedVideo.toJson());
-//            ChannelSystem ch = channelSystemRepository.findById(uploadedVideo.getChannelId());
+            channelSystemRepository.findById(uploadedVideo.getChannelId()).ifPresent(
+                    channelSystem -> {
+//                       channelSystem.addTotalView(uploadedVideo.addTotalView()); // 조회수 추가
+//                        channelSystem.setTotalView(uploadedVideo.getViewCount()); // 조회수 세팅
+                        channelSystemRepository.save(channelSystem);
+                    }
+            );
 
-//            p.setName(uploadedVideo.get());
-//            p.setStock(orderPlaced.getQty());
-//            productRepository.save(p);
             System.out.println("======================");
         }
     }
