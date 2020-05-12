@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PolicyHandler{
-//    @StreamListener(Processor.INPUT)
+    @StreamListener(KafkaProcessor.INPUT)
     public void onEventByString(@Payload String event){
         System.out.println("====== start event message ================");
         System.out.println(event);
