@@ -15,8 +15,6 @@ import org.springframework.util.MimeTypeUtils;
 @Entity
 @Table(name="ChannelSystem_table")
 public class ChannelSystem {
-
-
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long channelId;

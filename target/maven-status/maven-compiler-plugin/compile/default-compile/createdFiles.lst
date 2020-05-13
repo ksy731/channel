@@ -10,3 +10,4 @@ youtube\UploadedVideo.class
 youtube\ChannelSystem.class
 youtube\AbstractEvent.class
 youtube\AbstractEvent$1.class
+youtube\EditedVideo.class
