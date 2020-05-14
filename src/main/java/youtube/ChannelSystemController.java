@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
- @RestController
- public class ChannelSystemController {
-
+@RestController
+public class ChannelSystemController {
 
 @RequestMapping(value = "/editChannel",
         method = RequestMethod.POST,
